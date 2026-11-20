@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:aapt="http://schemas.android.com/aapt"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+
+    <!-- Left Wellness Leaf (Emerald Green) -->
+    <path
+        android:pathData="M 47,44 C 36,44 28,52 28,64 C 34,64 45,61 49,53 Z">
+        <aapt:attr name="android:fillColor">
+            <gradient
+                android:startX="28"
+                android:startY="64"
+                android:endX="49"
+                android:endY="44"
+                android:type="linear">
+                <item android:offset="0.0" android:color="#059669" />
+                <item android:offset="1.0" android:color="#34D399" />
+            </gradient>
+        </aapt:attr>
+    </path>
+
+    <!-- Right Wellness Leaf (Teal) -->
+    <path
+        android:pathData="M 61,44 C 72,44 80,52 80,64 C 74,64 63,61 59,53 Z">
+        <aapt:attr name="android:fillColor">
+            <gradient
+                android:startX="80"
+                android:startY="64"
+                android:endX="59"
+                android:endY="44"
+                android:type="linear">
+                <item android:offset="0.0" android:color="#0891B2" />
+                <item android:offset="1.0" android:color="#22D3EE" />
+            </gradient>
+        </aapt:attr>
+    </path>
+
+    <!-- Center Leaping Athlete Head (Saffron Orange) -->
+    <path
+        android:pathData="M 54,34 m -5.5,0 a 5.5,5.5 0 1,0 11,0 a 5.5,5.5 0 1,0 -11,0">
+        <aapt:attr name="android:fillColor">
+            <gradient
+                android:startX="49"
+                android:startY="28"
+                android:endX="59"
+                android:endY="40"
+                android:type="linear">
+                <item android:offset="0.0" android:color="#FBBF24" />
+                <item android:offset="1.0" android:color="#EA580C" />
+            </gradient>
+        </aapt:attr>
+    </path>
+
+    <!-- Center Athlete Torso & Energetic Raised Arms -->
+    <path
+        android:pathData="M 54,42 C 48,42 41,37 38,32 C 40,43 47,49 51,52 L 51,68 C 51,70 57,70 57,68 L 57,52 C 61,49 68,43 70,32 C 67,37 60,42 54,42 Z">
+        <aapt:attr name="android:fillColor">
+            <gradient
+                android:startX="38"
+                android:startY="32"
+                android:endX="70"
+                android:endY="70"
+                android:type="linear">
+                <item android:offset="0.0" android:color="#F59E0B" />
+                <item android:offset="1.0" android:color="#DC2626" />
+            </gradient>
+        </aapt:attr>
+    </path>
+
+    <!-- Base Uplifting Arc (White / Light Accent) -->
+    <path
+        android:pathData="M 44,72 C 50,75 58,75 64,72 C 61,77 47,77 44,72 Z"
+        android:fillColor="#E2E8F0" />
+</vector>

@@ -1,0 +1,6 @@
+{
+  "name": "FitMarathi",
+  "description": "AI Fitness, Nutrition & Wellness App in Marathi and English with culturally relevant Maharashtrian diets, 60+ workouts, yoga, health tracking, and Gemini AI Coach.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

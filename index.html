@@ -1,0 +1,611 @@
+<!DOCTYPE html>
+<html lang="mr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FitMarathi — तुमचा मराठी व इंग्रजी फिटनेस साथी</title>
+  <meta name="description" content="FitMarathi: AI Fitness & Wellness App in Marathi & English — Steps, Water & Calorie Radial Tracker, Local Reminders, Maharashtrian Diet & 66+ Yoga and Workout Routines." />
+  <style>
+    :root {
+      --deep-green: #064E3B;
+      --primary-green: #047857;
+      --emerald: #10B981;
+      --teal: #0D9488;
+      --light-teal: #E6F7F5;
+      --saffron: #F97316;
+      --gold: #F59E0B;
+      --bg: #F4F9F7;
+      --card: #FFFFFF;
+      --text: #0F172A;
+      --muted: #475569;
+      --border: #D1E7E2;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Noto Sans Devanagari", sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.55;
+    }
+    a { color: inherit; text-decoration: none; }
+    .container { max-width: 1120px; margin: 0 auto; padding: 0 20px; }
+
+    /* Navbar */
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 40;
+      background: rgba(255,255,255,0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 68px;
+      gap: 12px;
+    }
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 800;
+      font-size: 1.25rem;
+      color: var(--deep-green);
+    }
+    .brand-badge {
+      width: 38px;
+      height: 38px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, var(--primary-green), var(--saffron));
+      display: grid;
+      place-items: center;
+      color: #fff;
+      font-weight: 900;
+      font-size: 1.05rem;
+    }
+    .nav-actions { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+    .lang-btn {
+      border: 1.5px solid var(--primary-green);
+      background: var(--light-teal);
+      color: var(--deep-green);
+      padding: 8px 14px;
+      border-radius: 999px;
+      font-weight: 700;
+      font-size: 0.85rem;
+      cursor: pointer;
+    }
+    .cta-btn {
+      background: linear-gradient(135deg, var(--primary-green), var(--teal));
+      color: #fff;
+      border: none;
+      padding: 10px 18px;
+      border-radius: 999px;
+      font-weight: 700;
+      font-size: 0.88rem;
+      cursor: pointer;
+    }
+    .cta-btn.saffron {
+      background: linear-gradient(135deg, var(--saffron), var(--gold));
+    }
+
+    /* Hero */
+    .hero {
+      padding: 40px 0 32px;
+      background: radial-gradient(circle at top right, #D1FAE5 0%, var(--bg) 55%);
+    }
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 32px;
+      align-items: center;
+    }
+    @media (max-width: 860px) {
+      .hero-grid { grid-template-columns: 1fr; }
+    }
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--light-teal);
+      color: var(--primary-green);
+      font-weight: 700;
+      font-size: 0.82rem;
+      padding: 6px 14px;
+      border-radius: 999px;
+      margin-bottom: 14px;
+    }
+    h1 {
+      font-size: clamp(1.9rem, 3.8vw, 2.9rem);
+      line-height: 1.18;
+      color: var(--deep-green);
+      margin-bottom: 14px;
+    }
+    .hero-sub {
+      color: var(--muted);
+      font-size: 1.02rem;
+      margin-bottom: 22px;
+    }
+    .hero-buttons { display: flex; gap: 12px; flex-wrap: wrap; }
+    .promo-frame {
+      background: #0B1220;
+      border-radius: 24px;
+      padding: 10px;
+      box-shadow: 0 24px 48px rgba(6, 78, 59, 0.18);
+      overflow: hidden;
+    }
+    .promo-frame img {
+      width: 100%;
+      display: block;
+      border-radius: 16px;
+      object-fit: cover;
+    }
+
+    /* Sections */
+    section { padding: 34px 0; }
+    .section-title {
+      font-size: 1.5rem;
+      font-weight: 800;
+      color: var(--deep-green);
+      margin-bottom: 6px;
+    }
+    .section-desc {
+      color: var(--muted);
+      font-size: 0.95rem;
+      margin-bottom: 22px;
+    }
+
+    /* Dashboard Grid */
+    .grid-2 {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 20px;
+    }
+    @media (max-width: 820px) {
+      .grid-2 { grid-template-columns: 1fr; }
+    }
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 22px;
+      box-shadow: 0 8px 24px rgba(6, 78, 59, 0.05);
+    }
+
+    /* Radial Chart + Bars */
+    .radial-wrap {
+      display: flex;
+      align-items: center;
+      gap: 22px;
+      flex-wrap: wrap;
+    }
+    .radial-svg-box {
+      position: relative;
+      width: 156px;
+      height: 156px;
+      flex-shrink: 0;
+    }
+    .radial-center {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+    }
+    .radial-center strong { font-size: 1.45rem; color: var(--deep-green); }
+    .radial-center span { font-size: 0.72rem; color: var(--muted); font-weight: 600; }
+    .bars { flex: 1; min-width: 210px; display: flex; flex-direction: column; gap: 14px; }
+    .bar-head { display: flex; justify-content: space-between; font-size: 0.86rem; font-weight: 700; margin-bottom: 5px; }
+    .bar-track { height: 9px; border-radius: 999px; background: #E2E8F0; overflow: hidden; }
+    .bar-fill { height: 100%; border-radius: 999px; transition: width 0.4s ease; }
+    .bar-meta { font-size: 0.76rem; color: var(--muted); margin-top: 3px; }
+    .quick-log-row { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 16px; }
+    .chip-btn {
+      border: 1px solid var(--border);
+      background: var(--light-teal);
+      color: var(--deep-green);
+      padding: 8px 12px;
+      border-radius: 12px;
+      font-weight: 700;
+      font-size: 0.82rem;
+      cursor: pointer;
+    }
+    .chip-btn:hover { background: #CCFBF1; }
+
+    /* Reminders */
+    .reminder-form { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 14px; }
+    .reminder-form select, .reminder-form input {
+      padding: 9px 12px;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      font-size: 0.88rem;
+      background: #fff;
+    }
+    .reminder-list { display: flex; flex-direction: column; gap: 10px; }
+    .rem-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 14px;
+      border-radius: 14px;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      gap: 10px;
+    }
+    .rem-time {
+      font-weight: 800;
+      color: var(--primary-green);
+      background: var(--light-teal);
+      padding: 4px 10px;
+      border-radius: 8px;
+      font-size: 0.82rem;
+    }
+
+    /* Routines Catalog */
+    .cat-tabs { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 16px; }
+    .cat-tab {
+      border: 1px solid var(--border);
+      background: #fff;
+      color: var(--text);
+      padding: 8px 14px;
+      border-radius: 999px;
+      font-size: 0.84rem;
+      font-weight: 700;
+      cursor: pointer;
+    }
+    .cat-tab.active {
+      background: var(--primary-green);
+      color: #fff;
+      border-color: var(--primary-green);
+    }
+    .routine-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 14px;
+    }
+    .routine-card {
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .tag-row { display: flex; gap: 6px; flex-wrap: wrap; }
+    .tag {
+      font-size: 0.72rem;
+      font-weight: 700;
+      padding: 3px 8px;
+      border-radius: 6px;
+      background: var(--light-teal);
+      color: var(--deep-green);
+    }
+    .tag.saffron { background: #FFEDD5; color: #C2410C; }
+
+    /* Animated pulse badge */
+    @keyframes pulseRing {
+      0% { transform: scale(0.92); opacity: 0.9; }
+      50% { transform: scale(1.06); opacity: 1; }
+      100% { transform: scale(0.92); opacity: 0.9; }
+    }
+    .pulse-dot {
+      display: inline-block;
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: var(--emerald);
+      animation: pulseRing 1.8s infinite ease-in-out;
+    }
+
+    footer {
+      margin-top: 32px;
+      background: var(--deep-green);
+      color: #D1FAE5;
+      padding: 28px 0;
+      text-align: center;
+      font-size: 0.88rem;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container nav">
+      <div class="brand">
+        <div class="brand-badge">FM</div>
+        <span>FitMarathi</span>
+      </div>
+      <div class="nav-actions">
+        <button class="lang-btn" id="langToggle">English / मराठी</button>
+        <a href="#dashboard" class="cta-btn" data-mr="डॅशबोर्ड पहा" data-en="Open Dashboard">डॅशबोर्ड पहा</a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="container hero-grid">
+        <div>
+          <div class="pill"><span class="pulse-dot"></span> <span data-mr="महाराष्ट्राचा स्वतःचा फिटनेस साथी" data-en="Maharashtra's AI Fitness & Wellness Companion">महाराष्ट्राचा स्वतःचा फिटनेस साथी</span></div>
+          <h1 data-mr="तंदुरुस्त शरीर, आनंदी जीवन — आता मराठी आणि इंग्रजीमध्ये!" data-en="Fit Body, Happy Life — Now in Marathi & English!">तंदुरुस्त शरीर, आनंदी जीवन — आता मराठी आणि इंग्रजीमध्ये!</h1>
+          <p class="hero-sub" data-mr="दैनिक पावले, पाणी व कॅलरीजचे रेडियल चार्ट ट्रॅकिंग, ठराविक वेळेचे स्थानिक रिमाइंडर्स, महाराष्ट्रीयन आहार योजना आणि ६६+ योगा व फिटनेस दिनचर्या." data-en="Track daily steps, water intake & calories with radial progress rings, scheduled local reminders, authentic Maharashtrian meal plans, and 66+ categorized yoga & fitness routines.">
+            दैनिक पावले, पाणी व कॅलरीजचे रेडियल चार्ट ट्रॅकिंग, ठराविक वेळेचे स्थानिक रिमाइंडर्स, महाराष्ट्रीयन आहार योजना आणि ६६+ योगा व फिटनेस दिनचर्या.
+          </p>
+          <div class="hero-buttons">
+            <a href="#dashboard" class="cta-btn" data-mr="आजची प्रगती नोंदवा" data-en="Track Today's Goals">आजची प्रगती नोंदवा</a>
+            <a href="#routines" class="cta-btn saffron" data-mr="६६+ योगा व व्यायाम पहा" data-en="Explore 66+ Routines">६६+ योगा व व्यायाम पहा</a>
+          </div>
+        </div>
+        <div class="promo-frame">
+          <img src="./public/assets/aistudio/FitMarathi_Fitness_App_Promotion_ee7e4d17.png" alt="FitMarathi Fitness App Promotion" onerror="this.style.display='none'" />
+        </div>
+      </div>
+    </section>
+
+    <section id="dashboard">
+      <div class="container">
+        <h2 class="section-title" data-mr="आजचा आरोग्य डॅशबोर्ड व स्थानिक रिमाइंडर्स" data-en="Live Health Dashboard & Local Reminders">आजचा आरोग्य डॅशबोर्ड व स्थानिक रिमाइंडर्स</h2>
+        <p class="section-desc" data-mr="पावले, पाणी आणि कॅलरीजची टक्केवारी तपासा आणि वेळेवर पाणी व चालण्याची आठवण सेट करा." data-en="Monitor completion percentages for Steps, Water, and Calories and schedule local browser reminders.">
+          पावले, पाणी आणि कॅलरीजची टक्केवारी तपासा आणि वेळेवर पाणी व चालण्याची आठवण सेट करा.
+        </p>
+
+        <div class="grid-2">
+          <!-- Concentric Radial Chart Card -->
+          <div class="card">
+            <h3 style="color:var(--deep-green);margin-bottom:14px;" data-mr="दैनिक ध्येय प्रगती (रेडियल चार्ट)" data-en="Daily Goals Progress (Radial Chart)">दैनिक ध्येय प्रगती (रेडियल चार्ट)</h3>
+            <div class="radial-wrap">
+              <div class="radial-svg-box">
+                <svg viewBox="0 0 160 160" width="156" height="156">
+                  <!-- Outer Steps Ring -->
+                  <circle cx="80" cy="80" r="68" fill="none" stroke="#D1FAE5" stroke-width="11" />
+                  <circle id="ringSteps" cx="80" cy="80" r="68" fill="none" stroke="#10B981" stroke-width="11" stroke-linecap="round" transform="rotate(-90 80 80)" stroke-dasharray="427.25" stroke-dashoffset="100" />
+                  <!-- Middle Water Ring -->
+                  <circle cx="80" cy="80" r="52" fill="none" stroke="#CCFBF1" stroke-width="11" />
+                  <circle id="ringWater" cx="80" cy="80" r="52" fill="none" stroke="#0D9488" stroke-width="11" stroke-linecap="round" transform="rotate(-90 80 80)" stroke-dasharray="326.72" stroke-dashoffset="163" />
+                  <!-- Inner Calories Ring -->
+                  <circle cx="80" cy="80" r="36" fill="none" stroke="#FFEDD5" stroke-width="11" />
+                  <circle id="ringCalories" cx="80" cy="80" r="36" fill="none" stroke="#F97316" stroke-width="11" stroke-linecap="round" transform="rotate(-90 80 80)" stroke-dasharray="226.19" stroke-dashoffset="50" />
+                </svg>
+                <div class="radial-center">
+                  <strong id="overallPct">71%</strong>
+                  <span data-mr="दैनिक ध्येय" data-en="Daily Goal">दैनिक ध्येय</span>
+                </div>
+              </div>
+
+              <div class="bars">
+                <div>
+                  <div class="bar-head"><span data-mr="पावले (Steps)" data-en="Steps">पावले (Steps)</span><span id="stepsPct" style="color:var(--emerald)">85%</span></div>
+                  <div class="bar-track"><div id="barSteps" class="bar-fill" style="width:85%;background:var(--emerald)"></div></div>
+                  <div class="bar-meta" id="stepsMeta">8,462 / 10,000</div>
+                </div>
+                <div>
+                  <div class="bar-head"><span data-mr="पाणी (Water)" data-en="Water Intake">पाणी (Water)</span><span id="waterPct" style="color:var(--teal)">50%</span></div>
+                  <div class="bar-track"><div id="barWater" class="bar-fill" style="width:50%;background:var(--teal)"></div></div>
+                  <div class="bar-meta" id="waterMeta">1.5 L / 3.0 L</div>
+                </div>
+                <div>
+                  <div class="bar-head"><span data-mr="कॅलरीज (Calories)" data-en="Calories">कॅलरीज (Calories)</span><span id="calPct" style="color:var(--saffron)">79%</span></div>
+                  <div class="bar-track"><div id="barCal" class="bar-fill" style="width:79%;background:var(--saffron)"></div></div>
+                  <div class="bar-meta" id="calMeta">1,420 / 1,800 kcal</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="quick-log-row">
+              <button class="chip-btn" onclick="logSteps(500)">+500 Steps</button>
+              <button class="chip-btn" onclick="logWater(0.25)">+250 ml Water</button>
+              <button class="chip-btn" onclick="logCalories(150)">+150 kcal</button>
+              <button class="chip-btn" onclick="resetGoals()" data-mr="रीसेट" data-en="Reset">रीसेट</button>
+            </div>
+          </div>
+
+          <!-- Local Reminders Scheduler Card -->
+          <div class="card">
+            <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:12px;">
+              <h3 style="color:var(--deep-green);" data-mr="पाणी व पावले रिमाइंडर्स" data-en="Water & Steps Reminders">पाणी व पावले रिमाइंडर्स</h3>
+              <button class="chip-btn" onclick="testBrowserNotification()" data-mr="सूचना तपासा 🔔" data-en="Test Alert 🔔">सूचना तपासा 🔔</button>
+            </div>
+            <div class="reminder-form">
+              <select id="remType">
+                <option value="water">💧 पाणी (Water Intake)</option>
+                <option value="steps">👟 पावले (Steps Log)</option>
+              </select>
+              <input type="time" id="remTime" value="11:30" />
+              <button class="cta-btn" onclick="addReminder()" data-mr="वेळ जोडा" data-en="Add Time">वेळ जोडा</button>
+            </div>
+            <div class="reminder-list" id="reminderList"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="routines">
+      <div class="container">
+        <h2 class="section-title" data-mr="६६+ योगा व फिटनेस दिनचर्या (मराठी + English)" data-en="66+ Yoga & Fitness Routines (Marathi + English)">६६+ योगा व फिटनेस दिनचर्या (मराठी + English)</h2>
+        <p class="section-desc" data-mr="७ श्रेणींमध्ये विभागलेल्या सर्व योगासने, प्राणायाम, शक्ती, HIIT, कार्डिओ आणि कोर दिनचर्या." data-en="Explore curated routines across Yoga Asanas, Pranayama, Strength, HIIT, Cardio, Core & Recovery.">
+          ७ श्रेणींमध्ये विभागलेल्या सर्व योगासने, प्राणायाम, शक्ती, HIIT, कार्डिओ आणि कोर दिनचर्या.
+        </p>
+        <div class="cat-tabs" id="catTabs"></div>
+        <div class="routine-grid" id="routineGrid"></div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container">
+      <strong style="color:#fff;font-size:1.05rem;">FitMarathi</strong> — <span data-mr="फिट राहा, निरोगी राहा! Android App & Web Companion." data-en="Fit Raha, Healthy Raha! Android App & Web Companion.">फिट राहा, निरोगी राहा! Android App & Web Companion.</span>
+    </div>
+  </footer>
+
+  <script>
+    let lang = 'mr';
+    const state = JSON.parse(localStorage.getItem('fitmarathi_web_state') || 'null') || {
+      steps: 8462, stepGoal: 10000,
+      water: 1.5, waterGoal: 3.0,
+      calories: 1420, calGoal: 1800,
+      reminders: [
+        { id: 1, type: 'water', time: '09:00', titleMr: 'सकाळी पाणी पिण्याची आठवण', titleEn: 'Morning Water Check-In' },
+        { id: 2, type: 'water', time: '11:30', titleMr: 'दुपारी पाणी पिण्याची आठवण', titleEn: 'Midday Hydration Reminder' },
+        { id: 3, type: 'steps', time: '07:30', titleMr: 'सकाळची पावले नोंदवा', titleEn: 'Morning Walk & Steps Log' },
+        { id: 4, type: 'steps', time: '18:30', titleMr: 'संध्याकाळची पावले पूर्ण करा', titleEn: 'Evening Steps Check-In' }
+      ]
+    };
+
+    const categories = [
+      { id: 'all', mr: 'सर्व', en: 'All' },
+      { id: 'yoga', mr: 'योगासने', en: 'Yoga Asanas' },
+      { id: 'pranayama', mr: 'प्राणायाम व ध्यान', en: 'Pranayama' },
+      { id: 'strength', mr: 'शक्ती व बॉडीवेट', en: 'Strength' },
+      { id: 'hiit', mr: 'चरबी घटवणे व HIIT', en: 'Fat Loss & HIIT' },
+      { id: 'cardio', mr: 'कार्डिओ व स्टॅमिना', en: 'Cardio' },
+      { id: 'core', mr: 'कोर व पोट', en: 'Core & Abs' }
+    ];
+
+    const routines = [
+      { cat: 'yoga', dur: '15 min', cal: '110 kcal', mr: 'पारंपारिक १२ पायऱ्यांचे सूर्यनमस्कार', en: 'Classic 12-Step Surya Namaskar', descMr: 'सकाळची ऊर्जा वाढवणारे संपूर्ण सूर्यनमस्कार, ज्यामुळे पाठीचा कणा लवचिक होतो व पचन सुधारते.', descEn: 'Energizing morning sun salutation sequence that boosts metabolism and spine mobility.' },
+      { cat: 'yoga', dur: '25 min', cal: '195 kcal', mr: 'पॉवर विन्यास फॅट-बर्न योगा', en: 'Power Vinyasa Fat-Burn Yoga', descMr: 'वीरभद्रासन, उत्कटासन आणि प्लँक यांचा वेगवान संगम जो अतिरिक्त चरबी घटवतो.', descEn: 'Dynamic breath-linked yoga flow combining Warrior sequences and planks to tone lean muscle.' },
+      { cat: 'pranayama', dur: '10 min', cal: '25 kcal', mr: 'अनुलोम-विलोम नाडी शोधन प्राणायाम', en: 'Anulom Vilom Balance Breathing', descMr: 'मानसिक ताण कमी करणारा, रक्तदाब संतुलित ठेवणारा आणि एकाग्रता वाढवणारा प्राणायाम.', descEn: 'Classic alternate-nostril breathing to calm anxiety and sharpen mental clarity.' },
+      { cat: 'pranayama', dur: '15 min', cal: '20 kcal', mr: 'गाढ झोपेसाठी योगनिद्रा ध्यान', en: 'Deep Sleep Yoga Nidra', descMr: 'झोपण्यापूर्वी पाठीवर झोपून करायचा शरीर-विश्रांती सराव, ज्यामुळे शांत व गाढ झोप लागते.', descEn: 'Guided reclining body-scan relaxation to release tension and improve sleep quality.' },
+      { cat: 'strength', dur: '25 min', cal: '240 kcal', mr: 'पारंपारिक जोर-बैठका (दंड-बैठक)', en: 'Traditional Desi Dand & Baithak', descMr: 'महाराष्ट्राच्या व्यायाम परंपरेतील दमदार जोर आणि बैठका ज्या संपूर्ण शरीराची ताकद वाढवतात.', descEn: 'Inspired by Maharashtra Akhada fitness: Hindu push-ups and deep Baithaks for full-body vigor.' },
+      { cat: 'strength', dur: '20 min', cal: '150 kcal', mr: 'नवशिक्यांसाठी संपूर्ण शरीर बॉडीवेट कसरत', en: 'Beginner Full-Body Bodyweight', descMr: 'स्क्वॉट्स, सोपे पुश-अप्स, ग्लूट ब्रिज आणि प्लँक यांचा समावेश असलेली सुरक्षित शक्ती कसरत.', descEn: 'Essential starter routine with squats, incline push-ups, glute bridges, and planks.' },
+      { cat: 'hiit', dur: '20 min', cal: '185 kcal', mr: 'उड्यांशिवाय (नो-जम्प) शांत फॅट लॉस', en: 'Zero-Jump Apartment-Friendly HIIT', descMr: 'गुडघ्यांवर ताण न देता घरात कोणत्याही मजल्यावर करता येणारी उड्यांशिवाय फॅट-लॉस कसरत.', descEn: 'Silent, knee-friendly fat-loss circuit with zero jumping—ideal for apartments and beginners.' },
+      { cat: 'hiit', dur: '20 min', cal: '250 kcal', mr: '२० मिनिटे टबाटा कॅलरी बर्न', en: '20-Min Tabata Calorie Torch', descMr: '२० सेकंद वेगवान कसरत आणि १० सेकंद विश्रांती या तंत्राने कमी वेळात जास्त कॅलरीज जाळा.', descEn: 'Classic 20s high-intensity intervals with 10s rests to maximize calorie burn.' },
+      { cat: 'cardio', dur: '20 min', cal: '140 kcal', mr: 'घरातील २,००० पावले जलद चालणे', en: 'Indoor 2,000-Step Brisk Walk', descMr: 'घरातच जलद मार्चिंग व साइड स्टेप्सद्वारे २,००० पावले पूर्ण करणारी हृदय-आरोग्य कसरत.', descEn: 'Rainy-day indoor walking workout combining marching and side steps to hit daily step goals.' },
+      { cat: 'cardio', dur: '20 min', cal: '210 kcal', mr: 'पायऱ्या व स्टेप-अप स्टॅमिना कसरत', en: 'Staircase & Step-Up Stamina', descMr: 'सह्याद्रीतील गडकिल्ले ट्रेकिंग व पायांच्या ताकदीसाठी घरातील पायरीवरील उत्तम सराव.', descEn: 'Builds powerful legs, heart stamina, and trekking endurance using a single stair step.' },
+      { cat: 'core', dur: '12 min', cal: '85 kcal', mr: 'प्लँक मास्टरी व कोर मजबुती', en: 'Plank Mastery & Core Endurance', descMr: 'कोपरावरील प्लँक, साइड प्लँक आणि शोल्डर टॅप्सद्वारे पोटाचे आतील स्नायू घट्ट करा.', descEn: 'Progressive forearm, side plank, and shoulder-tap holds for deep spinal stability.' },
+      { cat: 'core', dur: '10 min', cal: '80 kcal', mr: '१० मिनिटे उभे राहून पोटाचे व्यायाम', en: '10-Min Standing Abs & Waist Sculpt', descMr: 'जमिनीवर न झोपता उभे राहून कंबर व पोटाचे बाजूचे स्नायू मजबूत करणारी सुरक्षित कसरत.', descEn: 'Floor-free standing core workout—ideal for sensitive backs and quick breaks.' }
+    ];
+
+    let activeCat = 'all';
+
+    function saveState() {
+      localStorage.setItem('fitmarathi_web_state', JSON.stringify(state));
+    }
+
+    function renderDashboard() {
+      const sp = Math.min(1, state.steps / state.stepGoal);
+      const wp = Math.min(1, state.water / state.waterGoal);
+      const cp = Math.min(1, state.calories / state.calGoal);
+      const ov = Math.round(((sp + wp + cp) / 3) * 100);
+
+      document.getElementById('ringSteps').style.strokeDashoffset = 427.25 * (1 - sp);
+      document.getElementById('ringWater').style.strokeDashoffset = 326.72 * (1 - wp);
+      document.getElementById('ringCalories').style.strokeDashoffset = 226.19 * (1 - cp);
+      document.getElementById('overallPct').textContent = ov + '%';
+
+      document.getElementById('stepsPct').textContent = Math.round(sp * 100) + '%';
+      document.getElementById('barSteps').style.width = Math.round(sp * 100) + '%';
+      document.getElementById('stepsMeta').textContent = `${state.steps.toLocaleString()} / ${state.stepGoal.toLocaleString()}`;
+
+      document.getElementById('waterPct').textContent = Math.round(wp * 100) + '%';
+      document.getElementById('barWater').style.width = Math.round(wp * 100) + '%';
+      document.getElementById('waterMeta').textContent = `${state.water.toFixed(2)} L / ${state.waterGoal.toFixed(1)} L`;
+
+      document.getElementById('calPct').textContent = Math.round(cp * 100) + '%';
+      document.getElementById('barCal').style.width = Math.round(cp * 100) + '%';
+      document.getElementById('calMeta').textContent = `${state.calories.toLocaleString()} / ${state.calGoal.toLocaleString()} kcal`;
+    }
+
+    function logSteps(delta) { state.steps += delta; saveState(); renderDashboard(); }
+    function logWater(delta) { state.water = +(state.water + delta).toFixed(2); saveState(); renderDashboard(); }
+    function logCalories(delta) { state.calories += delta; saveState(); renderDashboard(); }
+    function resetGoals() { state.steps = 0; state.water = 0; state.calories = 0; saveState(); renderDashboard(); }
+
+    function renderReminders() {
+      const list = document.getElementById('reminderList');
+      list.innerHTML = state.reminders.map(r => `
+        <div class="rem-item">
+          <div>
+            <div style="font-weight:700;font-size:0.9rem;">${r.type === 'water' ? '💧' : '👟'} ${lang === 'mr' ? r.titleMr : r.titleEn}</div>
+          </div>
+          <div style="display:flex;align-items:center;gap:8px;">
+            <span class="rem-time">${r.time}</span>
+            <button class="chip-btn" style="padding:4px 8px;" onclick="removeReminder(${r.id})">✕</button>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function addReminder() {
+      const type = document.getElementById('remType').value;
+      const time = document.getElementById('remTime').value || '10:00';
+      state.reminders.unshift({
+        id: Date.now(),
+        type,
+        time,
+        titleMr: type === 'water' ? 'पाणी पिण्याची आठवण' : 'पावले नोंदवण्याची आठवण',
+        titleEn: type === 'water' ? 'Water Intake Reminder' : 'Daily Steps Check-In'
+      });
+      saveState();
+      renderReminders();
+    }
+
+    function removeReminder(id) {
+      state.reminders = state.reminders.filter(r => r.id !== id);
+      saveState();
+      renderReminders();
+    }
+
+    function testBrowserNotification() {
+      const title = lang === 'mr' ? 'FitMarathi आठवण 💧👟' : 'FitMarathi Reminder 💧👟';
+      const body = lang === 'mr'
+        ? `पाणी: ${state.water}L / ${state.waterGoal}L • पावले: ${state.steps} / ${state.stepGoal}`
+        : `Water: ${state.water}L / ${state.waterGoal}L • Steps: ${state.steps} / ${state.stepGoal}`;
+      if ('Notification' in window) {
+        if (Notification.permission === 'granted') {
+          new Notification(title, { body });
+        } else {
+          Notification.requestPermission().then(p => {
+            if (p === 'granted') new Notification(title, { body });
+            else alert(title + '\n' + body);
+          });
+        }
+      } else {
+        alert(title + '\n' + body);
+      }
+    }
+
+    function renderRoutines() {
+      const tabs = document.getElementById('catTabs');
+      tabs.innerHTML = categories.map(c => `
+        <button class="cat-tab ${activeCat === c.id ? 'active' : ''}" onclick="setCat('${c.id}')">${lang === 'mr' ? c.mr : c.en}</button>
+      `).join('');
+
+      const filtered = activeCat === 'all' ? routines : routines.filter(r => r.cat === activeCat);
+      document.getElementById('routineGrid').innerHTML = filtered.map(r => `
+        <div class="routine-card">
+          <div style="font-weight:800;color:var(--deep-green);font-size:1rem;">${r.mr}</div>
+          <div style="font-weight:600;color:var(--teal);font-size:0.84rem;">${r.en}</div>
+          <div class="tag-row">
+            <span class="tag">${r.dur}</span>
+            <span class="tag saffron">~${r.cal}</span>
+          </div>
+          <p style="font-size:0.84rem;color:var(--text);"><strong>मराठी:</strong> ${r.descMr}</p>
+          <p style="font-size:0.82rem;color:var(--muted);"><strong>EN:</strong> ${r.descEn}</p>
+        </div>
+      `).join('');
+    }
+
+    function setCat(c) { activeCat = c; renderRoutines(); }
+
+    function applyLanguage() {
+      document.querySelectorAll('[data-mr]').forEach(el => {
+        el.textContent = el.getAttribute(lang === 'mr' ? 'data-mr' : 'data-en');
+      });
+      renderReminders();
+      renderRoutines();
+    }
+
+    document.getElementById('langToggle').addEventListener('click', () => {
+      lang = lang === 'mr' ? 'en' : 'mr';
+      applyLanguage();
+    });
+
+    renderDashboard();
+    applyLanguage();
+  </script>
+</body>
+</html>
